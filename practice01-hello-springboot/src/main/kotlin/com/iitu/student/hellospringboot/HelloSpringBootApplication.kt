@@ -31,5 +31,23 @@ class HelloSpringBootApplication
  * @param args Command line arguments passed to the application
  */
 fun main(args: Array<String>) {
-    runApplication<HelloSpringBootApplication>(*args)
+    val context = runApplication<HelloSpringBootApplication>(*args)
+    
+    // Display startup banner
+    val port = context.environment.getProperty("server.port") ?: "8080"
+    println("""
+        
+        ╔══════════════════════════════════════════════════════════════╗
+        ║                                                              ║
+        ║   🚀 Practice 01: Hello Spring Boot Started!                 ║
+        ║                                                              ║
+        ║   📍 Application URL: http://localhost:$port                 ║
+        ║                                                              ║
+        ║   📋 Available Endpoints:                                    ║
+        ║      GET http://localhost:$port/                             ║
+        ║      GET http://localhost:$port/greeting                     ║
+        ║                                                              ║
+        ╚══════════════════════════════════════════════════════════════╝
+        
+    """.trimIndent())
 }

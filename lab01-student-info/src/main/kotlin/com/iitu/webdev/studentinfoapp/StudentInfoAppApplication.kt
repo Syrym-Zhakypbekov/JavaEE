@@ -23,15 +23,42 @@ import org.springframework.boot.runApplication
  * 
  * MAIN METHOD EXPLANATION:
  * The main() method uses runApplication<StudentInfoAppApplication>(*args) which:
- * - Bootstraps the Spring application
- * - Creates the ApplicationContext (Spring container)
- * - Performs classpath scanning to find components
- * - Starts the embedded Tomcat server
- * - Runs the application
+ * 1. Bootstraps the Spring application
+ * 2. Creates the ApplicationContext (Spring container)
+ * 3. Performs classpath scanning to find components
+ * 4. Starts the embedded Tomcat server
+ * 5. Runs the application
  */
 @SpringBootApplication
 class StudentInfoAppApplication
 
 fun main(args: Array<String>) {
-    runApplication<StudentInfoAppApplication>(*args)
+    val context = runApplication<StudentInfoAppApplication>(*args)
+    
+    // Display startup banner
+    val port = context.environment.getProperty("server.port") ?: "8080"
+    val contextPath = context.environment.getProperty("server.servlet.context-path") ?: ""
+    val baseUrl = "http://localhost:$port$contextPath"
+    
+    println("""
+        
+        ╔══════════════════════════════════════════════════════════════╗
+        ║                                                              ║
+        ║   🚀 Lab 01: Student Info App Started!                       ║
+        ║                                                              ║
+        ║   📍 Base URL: $baseUrl                            ║
+        ║                                                              ║
+        ║   📋 Available Endpoints:                                    ║
+        ║      GET  $baseUrl/students                                  ║
+        ║      GET  $baseUrl/students/S001                             ║
+        ║      POST $baseUrl/students                                  ║
+        ║      GET  $baseUrl/students/health                           ║
+        ║                                                              ║
+        ║   👥 Initial Data:                                           ║
+        ║      S001: Alice Johnson (Computer Science)                  ║
+        ║      S002: Bob Smith (Software Engineering)                  ║
+        ║                                                              ║
+        ╚══════════════════════════════════════════════════════════════╝
+        
+    """.trimIndent())
 }
